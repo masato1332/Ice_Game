@@ -37,7 +37,7 @@ class Game_Screen() : Activity() {
             ctime = timeValue.toString()
 
 
-            if (count == 2){
+            if (count == 16){
                 handler.removeCallbacks(runnable)
                 val intent = Intent(this@Game_Screen,Result::class.java)
                 ctime = ctime.toString()

@@ -31,8 +31,8 @@ class Result: Activity() {
 
 
         resultBtn.setOnClickListener() {
-            name = editText.text.toString()
 
+            name = editText.text.toString()    //名前を書いた後に処理
             val post = AsyncHttp(name,cleartime)
             post.execute()
         }
