@@ -2,45 +2,75 @@ package com.example.ice_game
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.view.View
+import android.os.Parcel
+import android.os.Parcelable
+import android.support.v7.app.ActionBarDrawerToggle
 import android.widget.Button
 import kotlinx.android.synthetic.main.game__screen.*
 
 
-class Game_Screen : Activity() {
+class Game_Screen() : Activity() {
 
-    val handler : Handler()
+    val handler = Handler()
     var timeValue = 0
+    var count = 0
+    var ctime = ""
 
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+    override public fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game__screen)
 
-        val runnable = object : Runnable {
-            // メッセージ受信が有った時
-            override fun run() {
-                timeValue++                      // 秒カウンタ+1
-                timeToText(timeValue)?.let {        // timeToText()で表示データを作り
-                    timeText.text = it            // timeText.textへ代入(表示)
-                }
-                handler.postDelayed(this, 1000)  // 1000ｍｓ後に自分にpost
+        handler.post(runnable)
+
+        val button1 = findViewById<Button>(R.id.button1)
+
+        button1.setOnClickListener() {
+
+            count = count + 1
+            count_text.setText(count.toString())
+
+            ctime = timeValue.toString()
+
+
+            if (count == 2){
+                handler.removeCallbacks(runnable)
+                val intent = Intent(this@Game_Screen,Result::class.java)
+                ctime = ctime.toString()
+                intent.putExtra("ctime", ctime)
+
+
+               startActivity(intent)
             }
         }
 
-        handler.post(runnable)
 
-        stop.setOnClickListener {
-            handler.removeCallbacks(runnable)
-        }
 
 
 
     }
+
+
+    //時間計測部分
+    val runnable = object : Runnable {
+        // メッセージ受信が有った時
+        override fun run() {
+
+
+            timeValue++                      // 秒カウンタ+1
+            timeToText(timeValue)?.let {
+                // timeToText()で表示データを作り
+                timeText.text = it            // timeText.textへ代入(表示)
+            }
+            handler.postDelayed(this, 1000)  // 1000ｍｓ後に自分にpost
+        }
+    }
+
+}
 
     private fun timeToText(time: Int = 0): String? {
         return if (time < 0) {
@@ -56,4 +86,4 @@ class Game_Screen : Activity() {
     }
 
 
-}
+

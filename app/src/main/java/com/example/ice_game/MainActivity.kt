@@ -13,8 +13,10 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         //画面遷移ボタンを取得
         val startBtn = findViewById<Button>(R.id.startbtn)
+
         //startbtnを押したときの処理
         startBtn.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
